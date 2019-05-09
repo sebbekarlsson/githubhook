@@ -1,0 +1,9 @@
+[Unit]
+Description=uWSGI instance to serve githubhook
+
+[Service]
+User=root
+ExecStart=/bin/bash -c 'cd /var/www/githubhook/githubhook; uwsgi --ini githubhook.ini 2>&1'
+
+[Install]
+WantedBy=multi-user.target

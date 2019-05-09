@@ -1,0 +1,12 @@
+{
+    "repositories": {
+        "ianertson": {
+            "nginx": {
+                "server_names": ["ianertson.com", "www.ianertson.com"],
+                "https": true,
+                "python": false
+            }
+        }
+    },
+    "directory": "downloads"
+}
