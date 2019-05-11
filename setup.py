@@ -8,7 +8,9 @@ setup(
         'flask',
         'requests',
         'gitpython',
-        'jinja2'
+        'jinja2',
+        'pytest',
+        'mock'
     ],
     packages=find_packages(),
     entry_points={
