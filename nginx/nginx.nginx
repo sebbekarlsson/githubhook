@@ -12,7 +12,7 @@ server {
     {% if python %}
         location / {
             include uwsgi_params;
-            uwsgi_pass unix:/var/www/{{ app_name }}/{{ app_name }}.sock;
+            uwsgi_pass unix:/var/run/{{ app_name }}.sock;
         }
     {% else %}
         location / {
@@ -41,7 +41,7 @@ server {
         {% if python %}
             location / {
                 include uwsgi_params;
-                uwsgi_pass unix:/var/www/{{ app_name }}/{{ app_name }}.sock;
+                uwsgi_pass unix:/var/run/{{ app_name }}.sock;
                 # auth_basic "Restricted Content";
                 # auth_basic_user_file /etc/nginx/.htpasswd;
             }
@@ -56,6 +56,5 @@ server {
             root /var/www/{{ app_name }}/{{ app_name }};
             allow all;
         }
-
     }
 {% endif %}

@@ -22,4 +22,5 @@ systemctl daemon-reload
 systemctl restart nginx
 systemctl restart githubhook.service
 
+touch /var/run/githubhook.sock
 chmod -R 777 /var/run/githubhook.sock

@@ -148,3 +148,4 @@ tags
 
 # End of https://www.gitignore.io/api/python,vim
 config.json
+*.tar.gz
