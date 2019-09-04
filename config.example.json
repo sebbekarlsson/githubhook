@@ -4,7 +4,9 @@
             "nginx": {
                 "server_names": ["ianertson.com", "www.ianertson.com"],
                 "https": true,
-                "python": false
+                "python": false,
+                "public": "dist",
+                "build_cmd": false
             }
         }
     },

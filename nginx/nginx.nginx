@@ -17,7 +17,7 @@ server {
     {% else %}
         location / {
             index index.html index.htm;
-            root /var/www/{{ app_name }}/{{ app_name }};
+            root /var/www/{{ app_name }}/{{ app_name }}/{{ public }};
         }
     {% endif %}
 
@@ -48,7 +48,7 @@ server {
         {% else %}
             location / {
                 index index.html index.htm;
-                root /var/www/{{ app_name }}/{{ app_name }};
+                root /var/www/{{ app_name }}/{{ app_name }}/{{ public }};
             }
         {% endif %}
 

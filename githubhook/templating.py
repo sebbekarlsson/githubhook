@@ -14,14 +14,16 @@ def write_nginx_template(
     server_names,
     https,
     app_name,
-    python
+    python,
+    public=''
 ):
     open(os.path.join(SERVER_NGINX_PATH, app_name + '.nginx'), 'w+').write(
         TEMPLATE_NGINX.render(
             server_names=server_names,
             https=https,
             app_name=app_name,
-            python=python
+            python=python,
+            public=public
         )
     )
 

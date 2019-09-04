@@ -90,7 +90,7 @@ def deploy_app_python(app_name, full_dir):
     ), shell=True, stdout=subprocess.PIPE).stdout.read()
 
 
-def deploy_app(app_name, server_names, https, python):
+def deploy_app(app_name, server_names, https, python, public='', build_cmd=None):
     app_path = os.path.join(SERVER_APPLICATION_PATH, app_name)
 
     if not os.path.isdir(app_path):
@@ -103,13 +103,24 @@ def deploy_app(app_name, server_names, https, python):
 
     shutil.move(os.path.join(config['directory'], app_name), app_path)
 
+    logging.info('Running build_cmd: {} in {}'.format(build_cmd, full_dir))
+
+    subprocess.Popen('''
+        cd {full_dir};
+        {build_cmd}
+    '''.format(
+        full_dir=full_dir,
+        build_cmd=build_cmd
+    ), shell=True, stdout=subprocess.PIPE).stdout.read()
+
     logging.info('Generating nginx config...')
 
     write_nginx_template(
         server_names=server_names,
         https=https,
         app_name=app_name,
-        python=python
+        python=python,
+        public=public
     )
 
     if python:
