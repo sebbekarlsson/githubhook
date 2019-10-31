@@ -10,7 +10,8 @@ setup(
         'gitpython',
         'jinja2',
         'pytest',
-        'mock'
+        'mock',
+        'future'
     ],
     packages=find_packages(),
     entry_points={

@@ -79,15 +79,7 @@ def deploy_app_python(app_name, full_dir):
     subprocess.Popen('systemctl daemon-reload', shell=True, stdout=subprocess.PIPE).stdout.read()  # NOQA E501
     subprocess.Popen('systemctl restart {}.service'.format(app_name), shell=True, stdout=subprocess.PIPE).stdout.read()  # NOQA E501
 
-    logging.info('chmod {}...'.format(socket_path))
-
-    subprocess.Popen('''
-        touch {socket_path};
-        chmod -R 777 {socket_path};
-    '''.format(
-        app_name=app_name,
-        socket_path=socket_path
-    ), shell=True, stdout=subprocess.PIPE).stdout.read()
+    return socket_path
 
 
 def deploy_app(app_name, server_names, https, python, public='', build_cmd=None):
@@ -123,9 +115,21 @@ def deploy_app(app_name, server_names, https, python, public='', build_cmd=None)
         public=public
     )
 
+    socket_path = None
+
     if python:
-        deploy_app_python(app_name, full_dir)
+        socket_path = deploy_app_python(app_name, full_dir)
 
     logging.info('Restarting nginx...')
 
     subprocess.Popen('systemctl restart nginx', shell=True, stdout=subprocess.PIPE).stdout.read()  # NOQA E501
+
+    if python and socket_path:
+        logging.info('chmod {}...'.format(socket_path))
+
+        subprocess.Popen('''
+            touch {socket_path};
+            chmod -R 777 {socket_path};
+        '''.format(
+            socket_path=socket_path
+        ), shell=True, stdout=subprocess.PIPE).stdout.read()
