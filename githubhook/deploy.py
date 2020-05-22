@@ -84,7 +84,7 @@ def deploy_app_python(app_name, full_dir):
     if not python_bin:
         raise Exception('No python bin found')
 
-    loggin.info(f'Using python bin: {python_bin}')
+    logging.info(f'Using python bin: {python_bin}')
 
     subprocess.Popen(f'''
         cd {full_dir};

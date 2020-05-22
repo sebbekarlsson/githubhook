@@ -9,7 +9,7 @@ ln -s /etc/nginx/sites-available/githubhook.nginx /etc/nginx/sites-enabled/.
 cp githubhook.service /etc/systemd/system/.
 
 rm -rf ./venv
-virtualenv -p /usr/bin/python2.7 ./venv
+virtualenv -p /usr/bin/python3.7m ./venv
 source ./venv/bin/activate
 python setup.py develop
 
