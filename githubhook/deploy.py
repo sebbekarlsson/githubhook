@@ -40,6 +40,21 @@ def download_file(url, path):
         git.Repo.clone_from(url, path, branch='master')
 
 
+
+def get_usable_python_bin():
+    bins = [
+        '/usr/bin/python3.7m',
+        '/usr/bin/python3.7',
+        '/usr/bin/python3.6m',
+        '/usr/bin/python3.6',
+        '/usr/bin/python2.7'
+    ]
+
+    binfiles = list(filter(lambda x: os.path.isfile(x), bins))
+
+    return binfiles[0] if binfiles else None
+
+
 def deploy_app_python(app_name, full_dir):
     socket_path = os.path.join(SERVER_SOCKET_PATH, '{}.sock'.format(app_name))
     log_path = os.path.join(SERVER_LOG_PATH, '{}.log'.format(app_name))
@@ -64,9 +79,16 @@ def deploy_app_python(app_name, full_dir):
 
     logging.info('Creating virtualenv and running setup...')
 
-    subprocess.Popen('''
+    python_bin = get_usable_python_bin()
+
+    if not python_bin:
+        raise Exception('No python bin found')
+
+    loggin.info(f'Using python bin: {python_bin}')
+
+    subprocess.Popen(f'''
         cd {full_dir};
-        virtualenv -p /usr/bin/python2.7 ./venv;
+        virtualenv -p {python_bin} ./venv;
         ./venv/bin/python setup.py install;
         ./venv/bin/python setup.py develop;
     '''.format(
